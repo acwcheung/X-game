@@ -1,11 +1,14 @@
 import React from 'react';
 
 
-function Square() {
+function Square(props) {
   return (
-    <div className="App">
-      Hello Square!
-    </div>
+    <li 
+      className='square' 
+      onClick={props.onClick} 
+      value={props.value}
+    >{props.mark}
+    </li>
   );
 }
 
