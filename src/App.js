@@ -1,5 +1,5 @@
 import React, { Component }   from 'react';
-import Square from './Components/Square';
+import Squares from './Components/Squares';
 import Steps from './Components/Steps';
 import CalcWinner from './Components/CalcWinner';
 import './App.css';
@@ -8,9 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //you always update an object for state  
-      //history: [ {squares:[]}, ...] you need a object, with array as value
-      history: [  
+        history: [  
         {         
           squares: [
             null, null, null,
@@ -19,39 +17,43 @@ class App extends Component {
           ]
         }
       ],
-      isNextX: true
+      isNextX: true,
+      lastMove: []
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleStart = this.handleStart.bind(this);
     this.handleJump = this.handleJump.bind(this);
   }
 
-  handleClick(e) {
-    const index = e.target.value; 
+  handleClick(i) {
+    const index = i;
     const history = this.state.history
     const current = history[history.length-1]; 
     const squares = current.squares.slice(); 
     if(CalcWinner(squares)) { return null };
-    squares[index] = this.state.isNextX ? 'X': 'O'; 
+    if(squares[index]) { return null };
+    squares[index] = this.state.isNextX ? 'X': 'O';
+    const lastMove = this.state.lastMove.slice(); 
     this.setState({
-      //what is this?
       history: history.concat([{ squares: squares }]),
-      isNextX: !this.state.isNextX
+      isNextX: !this.state.isNextX,
+      lastMove: lastMove.concat(index)
     });    
   }
 
-  //how you pass the index back!
   handleJump(i) {
-    const history = this.state.history.splice(0, i+1);
+    const index = i;
+    const history = this.state.history.splice(0, index+1);
+    const lastMove = this.state.lastMove.splice(0, index);
     this.setState({
       history: history,
-      isNextX: i % 2 === 0 ? true: false,      
+      isNextX: index % 2 === 0 ? true: false,
+      lastMove: lastMove
     })
   }
 
   handleStart() {
     this.setState({
-      //reset the state
       history: [
         {
           squares: [
@@ -67,12 +69,15 @@ class App extends Component {
 
   render() {
     
-    const { history, isNextX } = this.state;
+    const { history, isNextX, lastMove } = this.state;
     const current = history[history.length-1].squares;
     const win = CalcWinner(current);
+    const draw = current.indexOf(null);
     let status;
     if(win) {
       status = <h5>The winner is {win}</h5>
+    } else if(draw === -1) {
+      status = <h5>It is a draw. Try again!</h5>
     } else {
       status = <h5>The next move is {isNextX ? 'X': 'O'}</h5>
     }
@@ -80,53 +85,11 @@ class App extends Component {
     return (
        <div>
         {status}
-        <ul className='board'>
-          <Square 
-            onClick={this.handleClick} 
-            value='0'
-            mark={current[0]}
-          />
-          <Square 
-            onClick={this.handleClick} 
-            value='1'
-            mark={current[1]}
-          />
-          <Square 
-            onClick={this.handleClick} 
-            value='2'
-            mark={current[2]}
-          />
-          <Square 
-            onClick={this.handleClick} 
-            value='3'
-            mark={current[3]}
-          />
-          <Square 
-            onClick={this.handleClick} 
-            value='4'
-            mark={current[4]}
-          />
-          <Square 
-            onClick={this.handleClick} 
-            value='5'
-            mark={current[5]}
-          />
-          <Square 
-            onClick={this.handleClick} 
-            value='6'
-            mark={current[6]}
-          />
-          <Square 
-            onClick={this.handleClick} 
-            value='7'
-            mark={current[7]}
-          />
-          <Square 
-            onClick={this.handleClick} 
-            value='8'
-            mark={current[8]}
-          />        
-        </ul>
+        <Squares
+          mark={current} 
+          onClick={this.handleClick}
+          lastMove={lastMove} 
+        />
         <button onClick={this.handleStart} >Start Again</button>
         <Steps 
           history={history}
