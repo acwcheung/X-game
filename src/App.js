@@ -84,17 +84,20 @@ class App extends Component {
     
     return (
        <div>
-        {status}
-        <Squares
-          mark={current} 
-          onClick={this.handleClick}
-          lastMove={lastMove} 
-        />
-        <button onClick={this.handleStart} >Start Again</button>
-        <Steps 
-          history={history}
-          onJump={this.handleJump} 
-        />
+         <h1>Play tic-tac-toe</h1>
+         <div className='container'>
+              {status}
+              <Squares
+                mark={current} 
+                onClick={this.handleClick}
+                lastMove={lastMove} 
+              />
+              <button className='start' onClick={this.handleStart} >Start Again</button>
+              <Steps 
+                history={history}
+                onJump={this.handleJump} 
+              />
+          </div>
       </div>  
     );  
   }

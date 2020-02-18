@@ -1,34 +1,76 @@
 body {
   font-family: Verdana;
   font-size: 20px;
+  color: white;
+  background-color: #032636;
 /*   text-align: center; */
 }
 
-.board {
-  width: 160px;
-  font-size: 30px;
-  display: flex;
-  flex-wrap: wrap;
+h1 {
+  text-align: center;
+  margin-top: 10vh;
 }
-.square {
-  height: 50px;
-  width: 50px;
-  border: 1px solid lightgrey;
+.container {
+  width: 350px;
+  margin: auto;
+  margin-top: 10vh;
+  text-align: center;
 }
+
+/*game board*/
 ul.board {
   padding: 0;
   margin:0;
+  width: 100%;
+  font-size: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 li.square {
+  background-color: #6F90A1;
+  height: 100px;
+  width: 100px;
+  margin: 5px;
   list-style: none;
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
+  transition: all 0.5s;  
+}
+li.square:hover {
+  transform: scale(1.1);
 }
 
 .move {
-  width: 100px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
+/*buttons*/
+button.start {
+  background-color: #C3FF9B;
+  padding: 10px 15px;
+  margin: 20px;
+  font-weight: 700;
+  color: #333333;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 3px 3px 2px #2A4E01;
+}
+
+.move button {
+  background-color: #C3E79B;
+  padding: 5px 8px;
+  margin: 3px;
+  font-weight: 700;
+  color: #333333;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 2px 2px 1px #2A4E01;
+}
+.move button:hover,
+button.start:hover {
+  background-color: #2A4E01;
+  color: white;
+}
