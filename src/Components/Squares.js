@@ -4,7 +4,6 @@ import React from 'react';
 function Squares(props) {
   let squares = [];
   const lastMove = props.lastMove[props.lastMove.length-1]
-  console.log(props.lastMove);
   for(let i=0; i<9; i++) {
     squares.push(
       <li 

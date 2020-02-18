@@ -63,16 +63,17 @@ class App extends Component {
           ]
         }
       ],
-      isNextX: true
+      isNextX: true,
+      lastMove: []
     })
   }
 
   render() {
-    
     const { history, isNextX, lastMove } = this.state;
     const current = history[history.length-1].squares;
     const win = CalcWinner(current);
     const draw = current.indexOf(null);
+    console.log(lastMove);
     let status;
     if(win) {
       status = <h5>The winner is {win}</h5>
